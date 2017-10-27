@@ -3,7 +3,6 @@
 define icingaweb2::config::groups (
   $group_section             = undef,
   $group_resource            = undef,
-  $group_user_backend        = undef,
   $group_class               = undef,
   $group_filter              = undef,
   $group_name_attribute      = undef,
@@ -25,12 +24,6 @@ define icingaweb2::config::groups (
     section => $group_section,
     setting => 'resource',
     value   => "\"${group_resource}\"",
-  }
-
-  ini_setting { "icingaweb2 groups ${group_section} user_backend":
-    section => $group_section,
-    setting => 'user_backend',
-    value   => "\"${group_user_backend}\"",
   }
 
   ini_setting { "icingaweb2 groups ${group_section} group_class":
@@ -65,7 +58,7 @@ define icingaweb2::config::groups (
 
   ini_setting { "icingaweb2 groups ${group_section} group_backend":
     section => $group_section,
-    setting => 'group_backend',
+    setting => 'backend',
     value   => "\"${group_backend}\"",
   }
 

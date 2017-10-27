@@ -184,7 +184,6 @@ class icingaweb2 (
   $auth_filter                       = $::icingaweb2::params::auth_filter,
   $group_section                     = $::icingaweb2::params::group_section,
   $group_resource                    = $::icingaweb2::params::group_resource,
-  $group_user_backend                = $::icingaweb2::params::group_user_backend,
   $group_class                       = $::icingaweb2::params::group_class,
   $group_filter                      = $::icingaweb2::params::group_filter,
   $group_name_attribute              = $::icingaweb2::params::group_name_attribute,
