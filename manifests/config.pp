@@ -47,6 +47,9 @@ class icingaweb2::config (
     "${::icingaweb2::config_dir}/config.ini":
       ensure => file;
 
+    "${::icingaweb2::config_dir}/groups.ini":
+      ensure => file;
+
     "${::icingaweb2::config_dir}/resources.ini":
       ensure => file;
 
@@ -68,6 +71,73 @@ class icingaweb2::config (
       icingaweb2::config::authentication_database { 'Local Database Authentication':
         auth_section  => 'icingaweb2',
         auth_resource => $::icingaweb2::auth_resource,
+      }
+      icingaweb2::config::resource_database { 'icingaweb_db':
+        resource_db       => $::icingaweb2::web_db,
+        resource_host     => $::icingaweb2::web_db_host,
+        resource_port     => $::icingaweb2::web_db_port,
+        resource_dbname   => $::icingaweb2::web_db_name,
+        resource_username => $::icingaweb2::web_db_user,
+        resource_password => $::icingaweb2::web_db_pass,
+      }
+    }
+    'ldap': {
+      icingaweb2::config::authentication_ldap { 'LDAP Authentication':
+        auth_section        => 'icingaweb2',
+        auth_resource       => $::icingaweb2::auth_resource,
+        user_class          => $::icingaweb2::auth_user_class,
+        filter              => $::icingaweb2::auth_filter,
+        user_name_attribute => $::icingaweb2::auth_user_name_attribute,
+        base_dn             => $::icingaweb2::auth_base_dn,
+      }
+      icingaweb2::config::groups { 'LDAP Group Authentication':
+        group_section          => $::icingaweb2::group_section,
+        group_resource         => $::icingaweb2::group_resource,
+        group_user_backend     => $::icingaweb2::auth_backend,
+        group_class            => $::icingaweb2::group_class,
+        group_filter           => $::icingaweb2::group_filter,
+        group_name_attribute   => $::icingaweb2::group_name_attribute,
+        group_member_attribute => $::icingaweb2::group_member_attribute,
+        group_base_dn          => $::icingaweb2::group_base_dn,
+        group_backend          => $::icingaweb2::auth_backend,
+        group_user_class       => $::icingaweb2::group_user_class,
+      }
+      icingaweb2::config::resource_ldap { 'icingaweb_ldap':
+        resource_bind_dn    => $::icingaweb2::resource_bind_dn,
+        resource_bind_pw    => $::icingaweb2::resource_bind_pw,
+        resource_host       => $::icingaweb2::resource_host,
+        resource_port       => $::icingaweb2::resource_port,
+        resource_encryption => $::icingaweb2::resource_encryption,
+        resource_root_dn    => $::icingaweb2::resource_root_dn ,
+      }
+    }
+    'msldap': {
+      icingaweb2::config::authentication_ad { 'AD Authentication':
+        auth_section        => 'icingaweb2',
+        auth_resource       => $::icingaweb2::auth_resource,
+        user_class          => $::icingaweb2::auth_user_class,
+        filter              => $::icingaweb2::auth_filter,
+        user_name_attribute => $::icingaweb2::auth_user_name_attribute,
+        base_dn             => $::icingaweb2::auth_base_dn,
+      }
+      icingaweb2::config::groups { 'AD Group Authentication':
+        group_section          => $::icingaweb2::group_section,
+        group_resource         => $::icingaweb2::group_resource,
+        group_user_backend     => $::icingaweb2::auth_backend,
+        group_class            => $::icingaweb2::group_class,
+        group_filter           => $::icingaweb2::group_filter,
+        group_name_attribute   => $::icingaweb2::group_name_attribute,
+        group_member_attribute => $::icingaweb2::group_member_attribute,
+        group_base_dn          => $::icingaweb2::group_base_dn,
+        group_backend          => $::icingaweb2::auth_backend,
+      }
+      icingaweb2::config::resource_ldap { 'icingaweb_ad':
+        resource_bind_dn    => $::icingaweb2::resource_bind_dn,
+        resource_bind_pw    => $::icingaweb2::resource_bind_pw,
+        resource_host       => $::icingaweb2::resource_host,
+        resource_port       => $::icingaweb2::resource_port,
+        resource_encryption => $::icingaweb2::resource_encryption,
+        resource_root_dn    => $::icingaweb2::resource_root_dn ,
       }
     }
     'external': {
@@ -118,15 +188,6 @@ class icingaweb2::config (
   }
 
   # Configure resources.ini
-  icingaweb2::config::resource_database { 'icingaweb_db':
-    resource_db       => $::icingaweb2::web_db,
-    resource_host     => $::icingaweb2::web_db_host,
-    resource_port     => $::icingaweb2::web_db_port,
-    resource_dbname   => $::icingaweb2::web_db_name,
-    resource_username => $::icingaweb2::web_db_user,
-    resource_password => $::icingaweb2::web_db_pass,
-  }
-
   icingaweb2::config::resource_database { 'icinga_ido':
     resource_db       => $::icingaweb2::ido_db,
     resource_host     => $::icingaweb2::ido_db_host,
@@ -141,6 +202,8 @@ class icingaweb2::config (
     role_users       => $::icingaweb2::admin_users,
     role_permissions => $::icingaweb2::admin_permissions,
   }
+
+  # Configure groups.ini
 
   if $::icingaweb2::manage_apache_vhost {
     ::apache::custom_config { 'icingaweb2':

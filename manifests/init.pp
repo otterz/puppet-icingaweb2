@@ -12,6 +12,15 @@
 # $auth_resource::
 #                         Default:
 #
+# $auth_ldap_user_class::
+#                         Default:
+#
+# $auth_ldap_user_name_attribute::
+#                         Default:
+#
+# $auth_ldap_base_dn::
+#                         Default:
+#
 # $config_dir::           Location of the main configuration directory.
 #                         Default: operating system specific.
 #
@@ -169,6 +178,26 @@ class icingaweb2 (
   $admin_users                       = $::icingaweb2::params::admin_users,
   $auth_backend                      = $::icingaweb2::params::auth_backend,
   $auth_resource                     = $::icingaweb2::params::auth_resource,
+  $auth_user_class                   = $::icingaweb2::params::auth_user_class,
+  $auth_user_name_attribute          = $::icingaweb2::params::auth_user_name_attribute,
+  $auth_base_dn                      = $::icingaweb2::params::auth_base_dn,
+  $auth_filter                       = $::icingaweb2::params::auth_filter,
+  $group_section                     = $::icingaweb2::params::group_section,
+  $group_resource                    = $::icingaweb2::params::group_resource,
+  $group_user_backend                = $::icingaweb2::params::group_user_backend,
+  $group_class                       = $::icingaweb2::params::group_class,
+  $group_filter                      = $::icingaweb2::params::group_filter,
+  $group_name_attribute              = $::icingaweb2::params::group_name_attribute,
+  $group_member_attribute            = $::icingaweb2::params::group_member_attribute,
+  $group_base_dn                     = $::icingaweb2::params::group_base_dn,
+  $group_backend                     = $::icingaweb2::params::group_backend,
+  $group_user_class                  = $::icingaweb2::params::group_user_class,
+  $resource_bind_dn                  = $::icingaweb2::params::resource_bind_dn,
+  $resource_bind_pw                  = $::icingaweb2::params::resource_bind_pw,
+  $resource_host                     = $::icingaweb2::params::resource_host,
+  $resource_port                     = $::icingaweb2::params::resource_port,
+  $resource_encryption               = $::icingaweb2::params::resource_encryption,
+  $resource_root_dn                  = $::icingaweb2::params::resource_root_dn,
   $config_dir                        = $::icingaweb2::params::config_dir,
   $config_dir_mode                   = $::icingaweb2::params::config_dir_mode,
   $config_dir_purge                  = $::icingaweb2::params::config_dir_purge,
@@ -270,6 +299,15 @@ class icingaweb2 (
     [
       'git',
       'package',
+    ]
+  )
+
+  validate_re($auth_backend,
+    [
+      'external',
+      'ldap',
+      'msldap',
+      'db',
     ]
   )
 
