@@ -93,7 +93,6 @@ class icingaweb2::config (
       icingaweb2::config::groups { 'LDAP Group Authentication':
         group_section          => $::icingaweb2::group_section,
         group_resource         => $::icingaweb2::group_resource,
-        group_user_backend     => $::icingaweb2::auth_backend,
         group_class            => $::icingaweb2::group_class,
         group_filter           => $::icingaweb2::group_filter,
         group_name_attribute   => $::icingaweb2::group_name_attribute,
@@ -123,7 +122,6 @@ class icingaweb2::config (
       icingaweb2::config::groups { 'AD Group Authentication':
         group_section          => $::icingaweb2::group_section,
         group_resource         => $::icingaweb2::group_resource,
-        group_user_backend     => $::icingaweb2::auth_backend,
         group_class            => $::icingaweb2::group_class,
         group_filter           => $::icingaweb2::group_filter,
         group_name_attribute   => $::icingaweb2::group_name_attribute,

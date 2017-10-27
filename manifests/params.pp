@@ -19,7 +19,6 @@ class icingaweb2::params {
   $auth_filter                       = ''
   $group_section                     = 'icingaweb2'
   $group_resource                    = undef
-  $group_user_backend                = undef
   $group_class                       = undef
   $group_filter                      = undef
   $group_name_attribute              = undef
